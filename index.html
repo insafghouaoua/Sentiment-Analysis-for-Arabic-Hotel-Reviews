@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/Favicon.png" />
+  <title>Arabic Hotel Review Sentiment Analysis</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">ArabSentiment<span class="accent">.</span></div>
+    <ul class="nav__links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#models">Models</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#code" class="nav__cta">GitHub</a></li>
+    </ul>
+    <button class="nav__burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__grid"></div>
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+
+    <div class="hero__content fade-in">
+      <div class="hero__badge">
+        <span class="badge__dot"></span>
+        NLP &middot; Deep Learning &middot; Arabic Text
+      </div>
+      <h1 class="hero__title">
+        Arabic Hotel Review<br />
+        <span class="hero__title--accent">Sentiment Analysis</span>
+      </h1>
+      <p class="hero__subtitle">
+        AI-powered sentiment classification for Arabic hotel reviews
+        using NLP, embeddings, and fine-tuned transformer models.
+      </p>
+      <div class="hero__actions">
+        <a href="https://github.com/insafghouaoua/Sentiment-Analysis-for-Arabic-Hotel-Reviews/notebooks" target="_blank" class="btn btn--primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          View GitHub
+        </a>
+        <a href="reports/report.pdf" target="_blank"  class="btn btn--secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          View Report
+        </a>
+        <a href="#results" class="btn btn--ghost">
+          Explore Results
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__num">94%</span><span class="stat__label">Best Accuracy</span></div>
+        <div class="stat__divider"></div>
+        <div class="stat"><span class="stat__num">10+</span><span class="stat__label">Models Tested</span></div>
+        <div class="stat__divider"></div>
+        <div class="stat"><span class="stat__num">3</span><span class="stat__label">Approaches</span></div>
+        <div class="stat__divider"></div>
+        <div class="stat"><span class="stat__num">HARD</span><span class="stat__label">Dataset</span></div>
+      </div>
+    </div>
+    <div class="hero__scroll">
+      <span>Scroll to explore</span>
+      <div class="scroll__line"></div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section overview" id="overview">
+    <div class="container">
+      <div class="overview__grid">
+        <div class="overview__card card-reveal">
+          <div class="card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <h2 class="card__title">Project Overview</h2>
+          <p class="card__text">This project focuses on analyzing Arabic hotel reviews and automatically classifying them into sentiment categories (Positive / Negative). Built as a complete end-to-end AI pipeline — from raw data to model evaluation — using the HARD (Hotel Arabic-Reviews Dataset).</p>
+        </div>
+        <div class="overview__card card-reveal" style="--delay: 0.1s">
+          <div class="card__icon card__icon--orange">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h2 class="card__title">Problem Statement</h2>
+          <p class="card__text">Online hotel platforms contain vast volumes of Arabic reviews. Manual analysis is inefficient, and Arabic's morphological richness makes automated processing difficult. Valuable insights remain unused due to the scarcity of effective Arabic NLP tools.</p>
+        </div>
+        <div class="overview__card card-reveal" style="--delay: 0.2s">
+          <div class="card__icon card__icon--cyan">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="card__title">Our Solution</h2>
+          <p class="card__text">We developed an intelligent pipeline that normalizes Arabic text, removes diacritics and dialects, generates rich embeddings, and trains multiple ML/DL models — achieving up to 94% accuracy with fine-tuned CAMeL-BERT using QLoRA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="section pipeline" id="pipeline">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">End-to-End</span>
+        <h2 class="section__title">Full AI Pipeline</h2>
+        <p class="section__subtitle">Six stages from raw reviews to actionable predictions</p>
+      </div>
+      <div class="pipeline__steps">
+        <div class="pipeline__step card-reveal" style="--delay: 0s">
+          <div class="step__num">01</div>
+          <div class="step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <h3 class="step__title">Data Collection</h3>
+          <p class="step__desc">HARD dataset — Hotel Arabic Reviews with star ratings, balanced across positive &amp; negative classes.</p>
+        </div>
+        <div class="pipeline__connector"><div class="connector__line"></div></div>
+        <div class="pipeline__step card-reveal" style="--delay: 0.1s">
+          <div class="step__num">02</div>
+          <div class="step__icon step__icon--active">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="step__title">Preprocessing</h3>
+          <p class="step__desc">Normalization, diacritics removal, Kuwaiti dialect standardization, punctuation &amp; stopwords removal.</p>
+        </div>
+        <div class="pipeline__connector"><div class="connector__line"></div></div>
+        <div class="pipeline__step card-reveal" style="--delay: 0.2s">
+          <div class="step__num">03</div>
+          <div class="step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 class="step__title">Feature Engineering</h3>
+          <p class="step__desc">AraBERT, Word2Vec (CBOW), and FastText (Skip-Gram) embeddings — rich vector representations.</p>
+        </div>
+        <div class="pipeline__connector"><div class="connector__line"></div></div>
+        <div class="pipeline__step card-reveal" style="--delay: 0.3s">
+          <div class="step__num">04</div>
+          <div class="step__icon step__icon--active">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <h3 class="step__title">Model Training</h3>
+          <p class="step__desc">Prompt Engineering, Embeddings + classifiers (RNN, CNN, LSTM), and Fine-tuning transformers.</p>
+        </div>
+        <div class="pipeline__connector"><div class="connector__line"></div></div>
+        <div class="pipeline__step card-reveal" style="--delay: 0.4s">
+          <div class="step__num">05</div>
+          <div class="step__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3 class="step__title">Evaluation</h3>
+          <p class="step__desc">Precision, Recall, F1-Score, and Accuracy across all model-embedding combinations.</p>
+        </div>
+        <div class="pipeline__connector"><div class="connector__line"></div></div>
+        <div class="pipeline__step card-reveal" style="--delay: 0.5s">
+          <div class="step__num">06</div>
+          <div class="step__icon step__icon--active">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="step__title">Model Comparison</h3>
+          <p class="step__desc">Head-to-head comparison across all approaches — CAMeL-BERT fine-tuning emerges as top performer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODELS -->
+  <section class="section models" id="models">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">Architecture</span>
+        <h2 class="section__title">Models Used</h2>
+        <p class="section__subtitle">From classical ML to cutting-edge Arabic transformers</p>
+      </div>
+      <div class="models__grid">
+        <div class="model-card card-reveal" style="--delay: 0s">
+          <div class="model-card__badge">Prompt Engineering</div>
+          <h3 class="model-card__name">ChatGPT-4o mini</h3>
+          <p class="model-card__desc">Zero-shot sentiment classification via structured prompting on preprocessed Arabic reviews.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>100%</strong></div>
+        </div>
+        <div class="model-card model-card--highlight card-reveal" style="--delay: 0.1s">
+          <div class="model-card__badge model-card__badge--hot">&#x1F3C6; Top Performer</div>
+          <h3 class="model-card__name">CAMeL-BERT + QLoRA</h3>
+          <p class="model-card__desc">Arabic BERT fine-tuned with QLoRA, achieving best generalization on unseen data.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>94%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.2s">
+          <div class="model-card__badge">Fine-Tuning</div>
+          <h3 class="model-card__name">AraGPT2</h3>
+          <p class="model-card__desc">Arabic GPT-2 fine-tuned for binary sentiment classification using the Hugging Face Trainer API.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>93%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.3s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">AraBERT + LSTM</h3>
+          <p class="model-card__desc">AraBERT contextual embeddings fed into an LSTM network for sequential context capture.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>90%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.4s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">AraBERT + CNN</h3>
+          <p class="model-card__desc">AraBERT contextual embeddings fed into a 1D Convolutional Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>89%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.5s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">AraBERT + RNN</h3>
+          <p class="model-card__desc">AraBERT contextual embeddings combined with a Recurrent Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>89%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.3s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">FastText + LSTM</h3>
+          <p class="model-card__desc">Skip-Gram FastText sub-word embeddings fed into an LSTM network for sequential context capture.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>88%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.4s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">FastText + CNN</h3>
+          <p class="model-card__desc">Skip-Gram FastText sub-word embeddings with 1D Convolutional Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>88%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.5s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">FastText + RNN</h3>
+          <p class="model-card__desc">Skip-Gram FastText sub-word embeddings combined with a Recurrent Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>87%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.4s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">Word2Vec + CNN</h3>
+          <p class="model-card__desc">CBOW Word2Vec embeddings with 1D Convolutional Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>81%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.5s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">Word2Vec + RNN</h3>
+          <p class="model-card__desc">CBOW Word2Vec embeddings combined with a Recurrent Neural Network classifier.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>81%</strong></div>
+        </div>
+        <div class="model-card card-reveal" style="--delay: 0.3s">
+          <div class="model-card__badge">Embedding</div>
+          <h3 class="model-card__name">Word2Vec + LSTM</h3>
+          <p class="model-card__desc">CBOW Word2Vec embeddings fed into an LSTM network for sequential context capture.</p>
+          <div class="model-card__metric"><span>Accuracy</span><strong>80%</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section results" id="results">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">Performance</span>
+        <h2 class="section__title">Results &amp; Metrics</h2>
+        <p class="section__subtitle">Fine-tuned transformers outperform classical embedding approaches</p>
+      </div>
+      <div class="metrics__grid card-reveal">
+        <div class="metric-pill"><span class="metric-pill__label">Precision</span><span class="metric-pill__val">0.95</span></div>
+        <div class="metric-pill"><span class="metric-pill__label">Recall</span><span class="metric-pill__val">0.95</span></div>
+        <div class="metric-pill metric-pill--accent"><span class="metric-pill__label">F1-Score</span><span class="metric-pill__val">0.95</span></div>
+        <div class="metric-pill metric-pill--accent"><span class="metric-pill__label">Accuracy</span><span class="metric-pill__val">94%</span></div>
+        <div class="metric-pill"><span class="metric-pill__label">Macro Avg</span><span class="metric-pill__val">0.94</span></div>
+        <div class="metric-pill"><span class="metric-pill__label">Weighted Avg</span><span class="metric-pill__val">0.94</span></div>
+      </div>
+      <div class="chart__wrapper card-reveal">
+        <div class="chart__header">
+          <h3>Model Accuracy Comparison</h3>
+          <div class="chart__legend">
+            <span class="legend-dot legend-dot--primary"></span>Accuracy
+            <span class="legend-dot legend-dot--secondary"></span>F1-Score (Neg)
+            <span class="legend-dot legend-dot--tertiary"></span>F1-Score (Pos)
+          </div>
+        </div>
+        <div class="chart__canvas-wrap">
+          <canvas id="resultsChart"></canvas>
+        </div>
+      </div>
+      <div class="confusion__wrap card-reveal">
+        <h3 class="confusion__title">Confusion Matrix &mdash; CAMeL-BERT (Best Model)</h3>
+        <div class="confusion__matrix">
+          <div class="matrix__grid">
+            <div class="matrix__cell matrix__cell--header"></div>
+            <div class="matrix__cell matrix__cell--header">Pred. Negative</div>
+            <div class="matrix__cell matrix__cell--header">Pred. Positive</div>
+            <div class="matrix__cell matrix__cell--header">Actual Negative</div>
+            <div class="matrix__cell matrix__cell--tp">1131<br/><small>True Neg</small></div>
+            <div class="matrix__cell matrix__cell--fp">59<br/><small>False Pos</small></div>
+            <div class="matrix__cell matrix__cell--header">Actual Positive</div>
+            <div class="matrix__cell matrix__cell--fn">57<br/><small>False Neg</small></div>
+            <div class="matrix__cell matrix__cell--tp">752<br/><small>True Pos</small></div>
+          </div>
+        </div>
+        <p class="confusion__note">Based on 1999 test samples &middot; CAMeL-BERT fine-tuned with QLoRA</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section class="section demo" id="demo">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">Interactive</span>
+        <h2 class="section__title">Try the Demo</h2>
+        <p class="section__subtitle">Enter an Arabic hotel review and see the predicted sentiment</p>
+        <p style="font-size:12px; opacity:0.7; margin-top:6px;">
+          ⚠️ Demo uses rule-based simulation (for visualization purposes)
+        </p>
+      </div>
+      <div class="demo__wrapper card-reveal">
+        <div class="demo__input-area">
+          <label class="demo__label">Arabic Review Input</label>
+          <textarea class="demo__textarea" id="reviewInput" placeholder="&#x627;&#x643;&#x62A;&#x628; &#x62A;&#x639;&#x644;&#x64A;&#x642;&#x64B;&#x627; &#x628;&#x627;&#x644;&#x639;&#x631;&#x628;&#x64A;&#x629; &#x647;&#x646;&#x627;... e.g. &#x627;&#x644;&#x641;&#x646;&#x62F;&#x642; &#x643;&#x627;&#x646; &#x631;&#x627;&#x626;&#x639; &#x648;&#x627;&#x644;&#x62E;&#x62F;&#x645;&#x629; &#x645;&#x645;&#x62A;&#x627;&#x632;&#x629;" rows="4" dir="rtl"></textarea>
+          <div class="demo__examples">
+            <span class="examples__label">Try:</span>
+            <button class="example-btn" onclick="setExample('&#x627;&#x644;&#x641;&#x646;&#x62F;&#x642; &#x643;&#x627;&#x646; &#x631;&#x627;&#x626;&#x639; &#x648;&#x627;&#x644;&#x62E;&#x62F;&#x645;&#x629; &#x645;&#x645;&#x62A;&#x627;&#x632;&#x629; &#x648;&#x627;&#x644;&#x645;&#x648;&#x642;&#x639; &#x642;&#x631;&#x64A;&#x628; &#x645;&#x646; &#x643;&#x644; &#x634;&#x64A;&#x621;')">&#x2728; Positive</button>
+            <button class="example-btn" onclick="setExample('&#x627;&#x644;&#x62A;&#x643;&#x64A;&#x64A;&#x641; &#x636;&#x639;&#x64A;&#x641; &#x644;&#x644;&#x63A;&#x627;&#x64A;&#x629; &#x648;&#x627;&#x644;&#x62D;&#x645;&#x627;&#x645; &#x645;&#x644;&#x648;&#x62B; &#x648;&#x627;&#x644;&#x62E;&#x62F;&#x645;&#x629; &#x633;&#x64A;&#x626;&#x629;')">&#x26A0;&#xFE0F; Negative</button>
+          </div>
+          <button class="btn btn--primary demo__btn" onclick="analyzeSentiment()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            Analyze Sentiment
+          </button>
+        </div>
+        <div class="demo__output" id="demoOutput">
+          <div class="output__placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <p>Results will appear here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section class="section report" id="report">
+    <div class="container">
+      <div class="report__card card-reveal">
+        <div class="report__content">
+          <span class="section__tag">Documentation</span>
+          <h2 class="report__title">Full Project Report</h2>
+          <p class="report__text">A detailed technical report covering the full methodology, data preprocessing pipeline, embedding generation, model architectures, training configurations, and comparative evaluation across all approaches.</p>
+          <ul class="report__features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Prompt Engineering with ChatGPT-4o mini</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Embeddings: AraBERT &middot; Word2Vec &middot; FastText</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Fine-tuning: AraGPT2 &amp; CAMeL-BERT + QLoRA</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Full evaluation with classification reports</li>
+          </ul>
+          <a href="reports/report.pdf" class="btn btn--primary report__btn" download>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download Report (PDF)
+        </a>
+        </div>
+        <div class="report__visual">
+          <div class="report__doc">
+            <div class="doc__header"><div class="doc__dot"></div><div class="doc__dot"></div><div class="doc__dot"></div></div>
+            <div class="doc__line doc__line--title"></div>
+            <div class="doc__line"></div>
+            <div class="doc__line doc__line--short"></div>
+            <div class="doc__line"></div>
+            <div class="doc__line doc__line--medium"></div>
+            <div class="doc__line doc__line--short"></div>
+            <div class="doc__line"></div>
+            <div class="doc__chart">
+              <div class="doc__bar" style="height:60%"></div>
+              <div class="doc__bar" style="height:85%"></div>
+              <div class="doc__bar" style="height:75%"></div>
+              <div class="doc__bar" style="height:94%"></div>
+              <div class="doc__bar" style="height:80%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODE & NOTEBOOKS -->
+  <section class="section code" id="code">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">Open Source</span>
+        <h2 class="section__title">Source Code &amp; Notebooks</h2>
+        <p class="section__subtitle">Full implementation covering all pipeline stages — fully reproducible</p>
+      </div>
+      <div class="code__grid">
+        <div class="code-card card-reveal" style="--delay: 0s">
+          <div class="code-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </div>
+          <h3 class="code-card__title">Full Repository</h3>
+          <p class="code-card__desc">Complete project code, documentation, datasets, and model checkpoints. Everything to reproduce results.</p>
+          <a href="https://github.com/insafghouaoua/Sentiment-Analysis-for-Arabic-Hotel-Reviews" target="_blank" class="btn btn--outline code-card__btn">View on GitHub &rarr;</a>
+        </div>
+        <div class="code-card code-card--featured card-reveal" style="--delay: 0.1s">
+          <div class="code-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3 class="code-card__title">Jupyter Notebooks</h3>
+          <p class="code-card__desc">Step-by-step AI pipeline implementation: preprocessing, embeddings, model training, and evaluation.</p>
+          <a href="https://github.com/insafghouaoua/Sentiment-Analysis-for-Arabic-Hotel-Reviews/notebooks" target="_blank" class="btn btn--primary code-card__btn">Explore Notebooks &rarr;</a>
+        </div>
+        <div class="code-card card-reveal" style="--delay: 0.2s">
+          <div class="code-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="code-card__title">Results &amp; Outputs</h3>
+          <p class="code-card__desc">Classification report, confusion matrices, and generated embeddings for all 9 model combinations.</p>
+          <a href="https://github.com/insafghouaoua/Sentiment-Analysis-for-Arabic-Hotel-Reviews/reports" target="_blank" class="btn btn--outline code-card__btn">View Results &rarr;</a>
+        </div>
+      </div>
+      <p class="code__note card-reveal">The project is fully reproducible, with detailed notebooks documenting each step of the pipeline — from raw Arabic text to final sentiment predictions.</p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section__header card-reveal">
+        <span class="section__tag">Competencies</span>
+        <h2 class="section__title">Skills Showcased</h2>
+      </div>
+      <div class="skills__wrap card-reveal">
+        <div class="skill-tag">Natural Language Processing</div>
+        <div class="skill-tag skill-tag--accent">Arabic Text Processing</div>
+        <div class="skill-tag">Machine Learning</div>
+        <div class="skill-tag skill-tag--accent">Deep Learning</div>
+        <div class="skill-tag">Transformer Fine-Tuning</div>
+        <div class="skill-tag">Feature Engineering</div>
+        <div class="skill-tag skill-tag--accent">Model Evaluation</div>
+        <div class="skill-tag">PyTorch</div>
+        <div class="skill-tag skill-tag--accent">Hugging Face</div>
+        <div class="skill-tag">Web Development</div>
+        <div class="skill-tag">Data Preprocessing</div>
+        <div class="skill-tag skill-tag--accent">QLoRA / PEFT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="section conclusion" id="conclusion">
+    <div class="container">
+      <div class="conclusion__card card-reveal">
+        <div class="conclusion__glow"></div>
+        <span class="section__tag">Takeaway</span>
+        <h2 class="conclusion__title">Conclusion</h2>
+        <p class="conclusion__text">This project demonstrates the ability to design and implement a complete AI system — from raw Arabic text data to actionable sentiment insights — while showcasing strong frontend development skills. The systematic comparison of three paradigms (Prompt Engineering, Embedding-based approaches, and Fine-tuned transformers) provides a comprehensive benchmark for modern Arabic NLP.</p>
+        <div class="conclusion__highlights">
+          <div class="highlight"><span class="highlight__icon">&#x1F3C6;</span><span>CAMeL-BERT + QLoRA achieved 94% accuracy</span></div>
+          <div class="highlight"><span class="highlight__icon">&#x26A1;</span><span>9 embedding-classifier combinations benchmarked</span></div>
+          <div class="highlight"><span class="highlight__icon">&#x1F310;</span><span>Addresses the Arabic NLP resource gap</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__left">
+        <div class="footer__logo">ArabSentiment<span class="accent">.</span></div>
+        <p class="footer__tagline">Arabic Hotel Review Sentiment Analysis</p>
+        <p class="footer__credit">Built by <strong>GHOUAOUA Insaf</strong></p>
+      </div>
+      <div class="footer__links">
+        <a href="https://github.com/insafghouaoua" target="_blank" class="footer__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/insaf-ghouaoua-855531220/" target="_blank" class="footer__link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 GHOUAOUA Insaf &middot; Arabic Sentiment Analysis Project</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
