@@ -12,12 +12,15 @@ AI system for classifying Arabic hotel reviews into sentiment categories using N
 ## Tech Stack
 Python, Scikit-learn, TensorFlow, NLP
 
-## Project Structure
-- notebooks/
-- data/
-- models/
-- results/
-- report/
+## Project Content
+
+This repository includes:
+
+- Jupyter Notebooks (full pipeline)
+- Data processing steps
+- Model training and evaluation
+- Experimental results
+- Final project report (PDF)
 
 ## Explore More
 🌐 Live Demo:  
